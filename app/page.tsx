@@ -1,20 +1,19 @@
-import Link from 'next/link'
-import { FiArrowRight } from 'react-icons/fi'
+import Link from "next/link";
+import { FiArrowRight } from "react-icons/fi";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Learn Programming in{' '}
-                <span className="text-blue-600">Simple Language</span>
+                Asli AI <span className="text-blue-600">Simple Language</span>
               </h1>
               <p className="text-lg text-gray-600 mb-8">
-                Learn Coding helps you learn programming with easy-to-understand courses, tutorials, and AI-powered tools.
+                Asli AI helps you learn programming with easy-to-understand
+                courses, tutorials, and AI-powered tools.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -32,8 +31,12 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="relative h-64 md:h-96 bg-gradient-to-br from-blue-400 to-purple-400 rounded-lg flex items-center justify-center">
-              <span className="text-8xl">🚀</span>
+            <div className="relative h-64 md:h-96 bg-gradient-to-br from-blue-400 to-purple-400 rounded-lg overflow-hidden">
+              <img
+                src="/images/hero section image.webp"
+                alt="Hero Section"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -46,46 +49,62 @@ export default function Home() {
             Why Choose Learn Coding?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            
             {/* 📖 Easy to Understand - Articles Page */}
-            <Link 
-              href="/articles" 
+            <Link
+              href="/articles"
               className="group text-center p-6 hover:shadow-xl transition-all duration-300 rounded-lg cursor-pointer"
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">📖</div>
-              <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">Easy to Understand</h3>
-              <p className="text-gray-600">Complex concepts explained in simple words</p>
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                📖
+              </div>
+              <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">
+                Easy to Understand
+              </h3>
+              <p className="text-gray-600">
+                Complex concepts explained in simple words
+              </p>
               <span className="inline-block mt-4 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
                 Read Tutorials →
               </span>
             </Link>
-            
+
             {/* 🤖 AI-Powered Tools - AI Tools Page */}
-            <Link 
-              href="/ai-tools" 
+            <Link
+              href="/ai-tools"
               className="group text-center p-6 hover:shadow-xl transition-all duration-300 rounded-lg cursor-pointer"
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
-              <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">AI-Powered Tools</h3>
-              <p className="text-gray-600">Doubt solver, code explainer and much more</p>
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                🤖
+              </div>
+              <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">
+                AI-Powered Tools
+              </h3>
+              <p className="text-gray-600">
+                Doubt solver, code explainer and much more
+              </p>
               <span className="inline-block mt-4 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
                 Try AI Tools →
               </span>
             </Link>
-            
+
             {/* 📚 Structured Courses - Courses Page */}
-            <Link 
-              href="/courses" 
+            <Link
+              href="/courses"
               className="group text-center p-6 hover:shadow-xl transition-all duration-300 rounded-lg cursor-pointer"
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">📚</div>
-              <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">Structured Courses</h3>
-              <p className="text-gray-600">Step by step learning from beginner to advanced</p>
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                📚
+              </div>
+              <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">
+                Structured Courses
+              </h3>
+              <p className="text-gray-600">
+                Step by step learning from beginner to advanced
+              </p>
               <span className="inline-block mt-4 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
                 Browse Courses →
               </span>
             </Link>
-            
           </div>
         </div>
       </section>
@@ -109,5 +128,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  )
+  );
 }

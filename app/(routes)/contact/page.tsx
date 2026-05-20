@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
+import Link from "next/link";
+import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 
 export default function ContactPage() {
   return (
@@ -24,17 +24,21 @@ export default function ContactPage() {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8">Let's get in touch</h2>
-        
+        <h2 className="text-3xl font-bold text-gray-800 mb-8">
+          Let's get in touch
+        </h2>
+
         <div className="grid md:grid-cols-2 gap-12">
           {/* Left Column - Contact Info */}
           <div>
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-6">Get In Touch</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">
+                Get In Touch
+              </h3>
               <p className="text-gray-600 mb-8">
                 Have questions or suggestions? We'd love to hear from you!
               </p>
-              
+
               <div className="space-y-6">
                 {/* Address */}
                 <div className="flex items-start gap-4">
@@ -42,8 +46,12 @@ export default function ContactPage() {
                     <FiMapPin className="text-xl text-blue-600" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-1">Address</h4>
-                    <p className="text-gray-600">New Mustafabad, Delhi - 110094</p>
+                    <h4 className="font-semibold text-gray-800 mb-1">
+                      Address
+                    </h4>
+                    <p className="text-gray-600">
+                      New Mustafabad, Delhi - 110094
+                    </p>
                   </div>
                 </div>
 
@@ -55,7 +63,7 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-1">Phone</h4>
                     <p className="text-gray-600">+91 9818239247</p>
-                  </div>  
+                  </div>
                 </div>
 
                 {/* Email */}
@@ -65,7 +73,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-1">Email</h4>
-                    <p className="text-gray-600">learncoding.com</p>
+                    <p className="text-gray-600">Asli AI.com</p>
                   </div>
                 </div>
               </div>
@@ -91,24 +99,26 @@ export default function ContactPage() {
 
               {/* Content - */}
               <div className="p-7">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">Our Location</h3>
-                
-                <a 
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  Our Location
+                </h3>
+
+                <a
                   href="https://www.google.com/maps/search/New+Mustafabad+Delhi"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 font-medium hover:underline inline-block mb-2">
-                
-                </a>
-                
+                  className="text-blue-600 font-medium hover:underline inline-block mb-2"
+                ></a>
               </div>
             </div>
           </div>
-        </div> 
+        </div>
 
         {/* Query Form */}
         <div className="mt-16 bg-white rounded-lg shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6">Fill The Form For Query...</h3>
+          <h3 className="text-2xl font-bold text-gray-800 mb-6">
+            Fill The Form For Query...
+          </h3>
           <form className="space-y-6">
             <div>
               <input
@@ -126,7 +136,8 @@ export default function ContactPage() {
             </div>
             <button
               type="submit"
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            >
               Send Message
             </button>
           </form>
@@ -136,12 +147,42 @@ export default function ContactPage() {
         <div className="mt-16 grid md:grid-cols-2 gap-8">
           {/* Miscellaneous */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-800 mb-4">MISCELLANEOUS</h4>
+            <h4 className="text-lg font-semibold text-gray-800 mb-4">
+              MISCELLANEOUS
+            </h4>
             <ul className="space-y-2">
-              <li><Link href="/contact" className="text-gray-600 hover:text-blue-600">Contact-Us</Link></li>
-              <li><Link href="/about" className="text-gray-600 hover:text-blue-600">About Us</Link></li>
-              <li><Link href="/privacy" className="text-gray-600 hover:text-blue-600">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="text-gray-600 hover:text-blue-600">Terms & Conditions</Link></li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-gray-600 hover:text-blue-600"
+                >
+                  Contact-Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-gray-600 hover:text-blue-600"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-gray-600 hover:text-blue-600"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms"
+                  className="text-gray-600 hover:text-blue-600"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -149,10 +190,14 @@ export default function ContactPage() {
           <div>
             <h4 className="text-lg font-semibold text-gray-800 mb-4">ABOUT</h4>
             <p className="text-gray-600 leading-relaxed">
-              Learn Coding is a platform designed to empower young Indian programmers with easy-to-understand 
-              technical content. Through our website, we deliver the latest insights in technology, explained 
-              in a simple Hinglish format. Our goal is to make learning accessible and engaging for aspiring 
-              developers. <Link href="/about" className="text-blue-600 hover:underline">Learn More</Link>
+              Asli AI is a platform designed to empower young Indian programmers
+              with easy-to-understand technical content. Through our website, we
+              deliver the latest insights in technology, explained in a simple
+              Hinglish format. Our goal is to make learning accessible and
+              engaging for aspiring developers.{" "}
+              <Link href="/about" className="text-blue-600 hover:underline">
+                Learn More
+              </Link>
             </p>
           </div>
         </div>

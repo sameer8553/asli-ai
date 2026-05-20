@@ -13,19 +13,35 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        // ✅ Check if credentials exists
+        if (!credentials) {
+          throw new Error('No credentials provided');
+        }
+        
+        // ✅ Extract email and password safely
+        const email = credentials.email as string;
+        const password = credentials.password as string;
+        
+        console.log('📧 Email:', email);
+        console.log('🔑 Password length:', password?.length);
+        
+        if (!email || !password) {
+          console.log('❌ Missing email or password');
           throw new Error('Please enter email and password');
         }
 
         await connectDB();
+        console.log('✅ Database connected');
         
-        const user = await User.findOne({ email: credentials.email });
+        const user = await User.findOne({ email: email } as any);
+        console.log('👤 User found:', user ? 'Yes' : 'No');
         
         if (!user) {
           throw new Error('No user found with this email');
         }
         
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(password, user.password);
+        console.log('🔐 Password valid:', isValid);
         
         if (!isValid) {
           throw new Error('Invalid password');
@@ -41,6 +57,7 @@ const handler = NextAuth({
   ],
   session: {
     strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60,
   },
   pages: {
     signIn: '/auth/login',
@@ -53,9 +70,6 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-      }
       return session;
     },
   },

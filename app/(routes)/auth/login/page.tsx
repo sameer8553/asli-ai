@@ -1,18 +1,41 @@
 'use client';
 
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  // ✅ Agar user already logged in hai to dashboard redirect
+  useEffect(() => {
+    if (status === 'authenticated') {
+      toast.success('You are already logged in!');
+      router.push('/dashboard');
+    }
+  }, [status, router]);
+
+  // ✅ Loading state
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  // ✅ Agar already logged in hai to login page show mat karo
+  if (status === 'authenticated') {
+    return null;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -69,7 +92,6 @@ export default function LoginPage() {
         
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
-            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email Address
@@ -86,7 +108,6 @@ export default function LoginPage() {
               />
             </div>
 
-            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                 Password
@@ -125,7 +146,6 @@ export default function LoginPage() {
           </div>
         </form>
 
-        {/* Forgot Password Link */}
         <div className="text-center">
           <Link href="/auth/forgot-password" className="text-sm text-blue-600 hover:text-blue-500">
             Forgot your password?

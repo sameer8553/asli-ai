@@ -1,35 +1,34 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import Navbar from './components/layout/Navbar'
-import Footer from './components/layout/Footer'
-import { AuthProvider } from './components/providers/AuthProvider' // ✅ Uncomment kiya
-
-const inter = Inter({ subsets: ['latin'] })
+import type { Metadata } from "next";
+import "./globals.css";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import { AuthProvider } from "./components/providers/AuthProvider"; // ✅ Uncomment kiya
 
 export const metadata: Metadata = {
-  title: 'Learn Coding - Programming Learning Platform',
-  description: 'Learn programming easily with courses, tutorials and AI-powered tools.',
-}
+  title: "Asli AI - Programming Learning Platform",
+  description:
+    "Asli AI Learn programming easily with courses, tutorials and AI-powered tools.",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <AuthProvider>  {/* ✅ Ab ye active hai */}
+      <body>
+        <AuthProvider>
+          {" "}
+          {/* ✅ Ab ye active hai */}
           <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-grow pt-16">
-              {children}
-            </main>
+            <main className="flex-grow pt-16">{children}</main>
             <Footer />
           </div>
-        </AuthProvider>  {/* ✅ Ab ye active hai */}
+        </AuthProvider>{" "}
+        {/* ✅ Ab ye active hai */}
       </body>
     </html>
-  )
+  );
 }

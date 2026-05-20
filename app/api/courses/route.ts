@@ -15,15 +15,44 @@ export async function GET(request: Request) {
     
     // ✅ Filter by category if provided
     if (category && category !== 'All') {
-      query.category = category;
+      query.category = category;  
     }
     
-    // ✅ Filter by topic (search in subcategory or title)
+    // ✅ Topic filter - exact match for programming languages
     if (topic) {
-      query.$or = [
-        { subcategory: { $regex: topic, $options: 'i' } },
-        { title: { $regex: topic, $options: 'i' } }
-      ];
+      if (topic === 'c') {
+        query.$or = [
+          { subcategory: 'c' },
+          { title: { $regex: '^C Programming', $options: 'i' } }
+        ];
+      } else if (topic === 'cpp') {
+        query.$or = [
+          { subcategory: 'cpp' },
+          { title: { $regex: 'C\\+\\+', $options: 'i' } }
+        ];
+      } else if (topic === 'java') {
+        query.$or = [
+          { subcategory: 'java' },
+          { title: { $regex: 'Java', $options: 'i' } }
+        ];
+      } else if (topic === 'python') {
+        query.$or = [
+          { subcategory: 'python' },
+          { title: { $regex: 'Python', $options: 'i' } }
+        ];
+      } else if (topic === 'javascript') {
+        query.$or = [
+          { subcategory: 'javascript' },
+          { title: { $regex: 'JavaScript', $options: 'i' } }
+        ];
+      } else if (topic === 'typescript') {
+        query.$or = [
+          { subcategory: 'typescript' },
+          { title: { $regex: 'TypeScript', $options: 'i' } }
+        ];
+      } else {
+        query.subcategory = { $regex: topic, $options: 'i' };
+      }
     }
     
     const courses = await Course.find(query).sort({ createdAt: -1 }).lean();

@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { FiGithub, FiTwitter, FiLinkedin, FiMail } from 'react-icons/fi';
+import Link from "next/link";
+import { FiGithub, FiTwitter, FiLinkedin, FiMail } from "react-icons/fi";
 
 const Footer = () => {
   return (
@@ -8,9 +8,10 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-white text-lg font-semibold mb-4">Learn Codeing </h3>
+            <h3 className="text-white text-lg font-semibold mb-4">Asli AI</h3>
             <p className="text-sm leading-relaxed">
-              Learn programming with easy-to-understand courses, tutorials, and AI-powered tools. Start your coding journey today.
+              Asli AI with easy-to-understand courses, tutorials, and AI-powered
+              tools. Start your coding journey today.
             </p>
             <div className="flex gap-4 mt-4">
               <Link href="#" className="hover:text-white transition">
@@ -30,7 +31,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-white text-lg font-semibold mb-4">
+              Quick Links
+            </h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/courses" className="hover:text-white transition">
@@ -62,30 +65,47 @@ const Footer = () => {
 
           {/* Categories */}
           <div>
-            <h3 className="text-white text-lg font-semibold mb-4">Top Categories</h3>
+            <h3 className="text-white text-lg font-semibold mb-4">
+              Top Categories
+            </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/courses?category=python" className="hover:text-white transition">
+                <Link
+                  href="/courses?category=python"
+                  className="hover:text-white transition"
+                >
                   Python
                 </Link>
               </li>
               <li>
-                <Link href="/courses?category=java" className="hover:text-white transition">
+                <Link
+                  href="/courses?category=java"
+                  className="hover:text-white transition"
+                >
                   Java
                 </Link>
               </li>
               <li>
-                <Link href="/courses?category=javascript" className="hover:text-white transition">
+                <Link
+                  href="/courses?category=javascript"
+                  className="hover:text-white transition"
+                >
                   JavaScript
                 </Link>
               </li>
               <li>
-                <Link href="/courses?category=dsa" className="hover:text-white transition">
+                <Link
+                  href="/courses?category=dsa"
+                  className="hover:text-white transition"
+                >
                   DSA
                 </Link>
               </li>
               <li>
-                <Link href="/courses?category=webdev" className="hover:text-white transition">
+                <Link
+                  href="/courses?category=webdev"
+                  className="hover:text-white transition"
+                >
                   Web Development
                 </Link>
               </li>
@@ -97,7 +117,10 @@ const Footer = () => {
             <h3 className="text-white text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/privacy-policy" className="hover:text-white transition">
+                <Link
+                  href="/privacy-policy"
+                  className="hover:text-white transition"
+                >
                   Privacy Policy
                 </Link>
               </li>
@@ -121,7 +144,10 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
-          <p>&copy; {new Date().getFullYear()} Learn Codeing  . All rights reserved. Made with ❤️ for learners worldwide</p>
+          <p>
+            &copy; {new Date().getFullYear()} Asli AI. All rights reserved. Made
+            with ❤️ for learners worldwide
+          </p>
         </div>
       </div>
     </footer>

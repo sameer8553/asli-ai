@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { FiMenu, FiX, FiLogIn } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogIn, FiLogOut } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
+  const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -25,7 +27,6 @@ const Navbar = () => {
     { href: '/ai-tools', label: 'AI Tools' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
-
   ];
 
   return (
@@ -36,8 +37,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-blue-600">Learn Codeing</span>
-           
+            <span className="text-2xl font-bold text-blue-600">AsliAI</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -54,20 +54,34 @@ const Navbar = () => {
               </Link>
             ))}
             
-            <Link
-              href="/auth/login"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
-            >
-              <FiLogIn />
-              <span>Login</span>
-            </Link>
-            
-            <Link
-              href="/auth/register"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-            >
-              Sign Up Free
-            </Link>
+            {status === 'authenticated' ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-700">Hi, {session?.user?.name}</span>
+                <button
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                  className="flex items-center space-x-2 text-red-600 hover:text-red-700"
+                >
+                  <FiLogOut />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/auth/login"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
+                >
+                  <FiLogIn />
+                  <span>Login</span>
+                </Link>
+                <Link
+                  href="/auth/register"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                >
+                  Sign Up 
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -102,20 +116,37 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/auth/login"
-                onClick={() => setIsOpen(false)}
-                className="block py-2 text-sm text-gray-700"
-              >
-                Login
-              </Link>
-              <Link
-                href="/auth/register"
-                onClick={() => setIsOpen(false)}
-                className="block py-2 text-sm text-blue-600 font-medium"
-              >
-                Sign Up Free
-              </Link>
+              {status === 'authenticated' ? (
+                <>
+                  <p className="text-sm text-gray-500 py-1">Hi, {session?.user?.name}</p>
+                  <button
+                    onClick={() => {
+                      signOut({ callbackUrl: '/' });
+                      setIsOpen(false);
+                    }}
+                    className="block w-full text-left py-2 text-sm text-red-600"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/login"
+                    onClick={() => setIsOpen(false)}
+                    className="block py-2 text-sm text-gray-700"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/auth/register"
+                    onClick={() => setIsOpen(false)}
+                    className="block py-2 text-sm text-blue-600 font-medium"
+                  >
+                    Sign Up Free
+                  </Link>
+                </>
+              )}
             </div>
           </motion.div>
         )}

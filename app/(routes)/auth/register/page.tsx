@@ -112,7 +112,14 @@ export default function RegisterPage() {
         router.push('/auth/login');
       }
     } catch (error: any) {
-      if (error.response?.data?.error) {
+      // ✅ NEW CODE ADDED HERE - User already exists check
+      if (error.response?.data?.error === 'User already exists with this email') {
+        toast.error('User already exists, please login');
+        // Redirect to login page after 2 seconds
+        setTimeout(() => {
+          router.push('/auth/login');
+        }, 2000);
+      } else if (error.response?.data?.error) {
         toast.error(error.response.data.error);
       } else {
         toast.error('Something went wrong');

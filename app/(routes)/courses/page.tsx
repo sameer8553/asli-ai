@@ -21,167 +21,158 @@ type Course = {
 };
 
 export default function CoursesPage() {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('Programming Languages');
+  const [selectedCategory, setSelectedCategory] = useState('All'); // Changed default to 'All'
   const [selectedTopic, setSelectedTopic] = useState('');
   const [loading, setLoading] = useState(true);
 
   const categories = [
+    'All', // Added 'All' option
     'Programming Languages',
     'Web Development',
     'Data Structures & Algorithms',
-    'Mobile Development',
-    'Android Development',
     'Frontend Frameworks',
     'Backend Languages',
-    'Backend Frameworks',
-    'Data Science & AI',
     'Databases',
-    'DevOps & Cloud',
   ];
 
-  // ✅ Programming Languages Topics
-  const programmingTopics = [
-    { name: 'C', slug: 'c' },
-    { name: 'C++', slug: 'cpp' },
-    { name: 'Java', slug: 'java' },
-    { name: 'Python', slug: 'python' },
-    { name: 'JavaScript', slug: 'javascript' },
-    { name: 'TypeScript', slug: 'typescript' },
-  ];
+  // Define all topics with their categories for better filtering
+  const topicDefinitions = {
+    'Programming Languages': [
+      { name: 'C', slug: 'c', keywords: ['C', 'C Programming'] },
+      { name: 'C++', slug: 'cpp', keywords: ['C++', 'CPP'] },
+      { name: 'Java', slug: 'java', keywords: ['Java'] },
+      { name: 'Python', slug: 'python', keywords: ['Python'] },
+      { name: 'JavaScript', slug: 'javascript', keywords: ['JavaScript'] },
+    ],
+    'Web Development': [
+      { name: 'HTML5', slug: 'html5', keywords: ['HTML', 'HTML5'] },
+      { name: 'CSS3', slug: 'css3', keywords: ['CSS', 'CSS3'] },
+      { name: 'JavaScript', slug: 'javascript', keywords: ['JavaScript'] },
+      { name: 'Node.js', slug: 'nodejs', keywords: ['Node.js', 'NodeJS'] },
+      { name: 'Express.js', slug: 'express', keywords: ['Express', 'Express.js'] },
+    ],
+    'Data Structures & Algorithms': [
+      { name: 'DSA in C', slug: 'dsa-c', keywords: ['DSA in C', 'Data Structures C'] },
+      { name: 'DSA in C++', slug: 'dsa-cpp', keywords: ['DSA in C++', 'Data Structures C++'] },
+      { name: 'DSA in Java', slug: 'dsa-java', keywords: ['DSA in Java', 'Data Structures Java'] },
+      { name: 'DSA in Python', slug: 'dsa-python', keywords: ['DSA in Python', 'Data Structures Python'] },
+    ],
+   
+    'Frontend Frameworks': [
+      { name: 'React.js', slug: 'react', keywords: ['React', 'React.js'] },
+      { name: 'Angular', slug: 'angular', keywords: ['Angular'] },
+      { name: 'Tailwind CSS', slug: 'tailwind', keywords: ['Tailwind', 'Tailwind CSS'] },
+      { name: 'Bootstrap', slug: 'bootstrap', keywords: ['Bootstrap'] },
+    ],
+    'Backend Languages': [
+      { name: 'JavaScript', slug: 'javascript', keywords: ['JavaScript'] },
+      { name: 'Python', slug: 'python', keywords: ['Python'] },
+      { name: 'Java', slug: 'java', keywords: ['Java'] },
+    ],
+    'Databases': [
+      { name: 'MySQL', slug: 'mysql', keywords: ['MySQL'] },
+      { name: 'MongoDB', slug: 'mongodb', keywords: ['MongoDB'] },
+      { name: 'PostgreSQL', slug: 'postgresql', keywords: ['PostgreSQL'] },
+    ],
+    
+  };
 
-  // ✅ Web Development Topics
-  const webDevTopics = [
-    { name: 'HTML5', slug: 'html5' },
-    { name: 'CSS3', slug: 'css3' },
-    { name: 'JavaScript', slug: 'javascript' },
-    { name: 'TypeScript', slug: 'typescript' },
-    { name: 'Node.js', slug: 'nodejs' },
-    { name: 'Express.js', slug: 'express' },
-  ];
-
-  // ✅ DSA Topics
-  const dsaTopics = [
-    { name: 'DSA in C', slug: 'dsa-c' },
-    { name: 'DSA in C++', slug: 'dsa-cpp' },
-    { name: 'DSA in Java', slug: 'dsa-java' },
-    { name: 'DSA in Python', slug: 'dsa-python' },
-    { name: 'DSA in JavaScript', slug: 'dsa-javascript' },
-  ];
-
-  // ✅ Mobile Development Topics
-  const mobileDevTopics = [
-    { name: 'Android', slug: 'android' },
-    { name: 'Android Studio', slug: 'android-studio' },
-    { name: 'Flutter', slug: 'flutter' },
-    { name: 'React Native', slug: 'react-native' },
-    { name: 'Swift', slug: 'swift' },
-  ];
-
-  // ✅ Android Development Topics
-  const androidDevTopics = [
-    { name: 'Android', slug: 'android' },
-    { name: 'Kotlin', slug: 'kotlin' },
-    { name: 'Java', slug: 'java' },
-    { name: 'Android Studio', slug: 'android-studio' },
-    { name: 'Flutter', slug: 'flutter' },
-  ];
-
-  // ✅ Frontend Frameworks Topics
-  const frontendTopics = [
-    { name: 'React.js', slug: 'react' },
-    { name: 'Angular', slug: 'angular' },
-    { name: 'Vue.js', slug: 'vue' },
-    { name: 'Tailwind CSS', slug: 'tailwind' },
-    { name: 'Bootstrap', slug: 'bootstrap' },
-  ];
-
-  // ✅ Backend Languages Topics
-  const backendLangTopics = [
-    { name: 'JavaScript', slug: 'javascript' },
-    { name: 'Python', slug: 'python' },
-    { name: 'Java', slug: 'java' },
-  ];
-
-  // ✅ Backend Frameworks Topics
-  const backendFrameworkTopics = [
-    { name: 'Django', slug: 'django' },
-    { name: 'Flask', slug: 'flask' },
-    { name: 'Laravel', slug: 'laravel' },
-    { name: 'Spring Boot', slug: 'spring-boot' },
-    { name: 'ASP.NET', slug: 'aspnet' },
-  ];
-
-  // ✅ Data Science & AI Topics
-  const dataScienceTopics = [
-    { name: 'TensorFlow', slug: 'tensorflow' },
-    { name: 'PyTorch', slug: 'pytorch' },
-    { name: 'NumPy', slug: 'numpy' },
-    { name: 'Pandas', slug: 'pandas' },
-  ];
-
-  // ✅ Databases Topics
-  const databaseTopics = [
-    { name: 'MySQL', slug: 'mysql' },
-    { name: 'MongoDB', slug: 'mongodb' },
-    { name: 'PostgreSQL', slug: 'postgresql' },
-  ];
-
-  // ✅ DevOps & Cloud Topics
-  const devopsTopics = [
-    { name: 'Docker', slug: 'docker' },
-    { name: 'AWS', slug: 'aws' },
-    { name: 'Kubernetes', slug: 'kubernetes' },
-    { name: 'Git', slug: 'git' },
-  ];
-
+  // Fetch all courses once on component mount
   useEffect(() => {
-    fetchCourses();
+    fetchAllCourses();
   }, []);
 
+  // Filter courses when category or topic changes
   useEffect(() => {
-    filterCourses();
-  }, [selectedCategory, selectedTopic, courses]);
+    filterCoursesLocally();
+  }, [selectedCategory, selectedTopic, allCourses]);
 
-  const fetchCourses = async () => {
+  const fetchAllCourses = async () => {
+    setLoading(true);
     try {
       const res = await fetch('/api/courses');
       const data = await res.json();
+      
+      console.log('📦 Total courses fetched:', data.courses?.length);
+      
       if (data.success) {
-        setCourses(data.courses);
-        setFilteredCourses(data.courses);
+        setAllCourses(data.courses);
       }
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      console.error('❌ Error fetching courses:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Function to get display title
+  // Improved local filtering logic
+  const filterCoursesLocally = () => {
+    if (!allCourses.length) {
+      setFilteredCourses([]);
+      return;
+    }
+
+    let filtered = [...allCourses];
+
+    // Filter by category (skip if 'All' is selected)
+    if (selectedCategory && selectedCategory !== 'All') {
+      filtered = filtered.filter(course => course.category === selectedCategory);
+    }
+
+    // Filter by topic if selected
+    if (selectedTopic && selectedCategory !== 'All') {
+      const topicsForCategory = topicDefinitions[selectedCategory as keyof typeof topicDefinitions];
+      const selectedTopicData = topicsForCategory?.find(topic => topic.slug === selectedTopic);
+      
+      if (selectedTopicData) {
+        // Filter based on keywords in course title or description
+        filtered = filtered.filter(course => {
+          const searchText = `${course.title} ${course.description}`.toLowerCase();
+          return selectedTopicData.keywords.some(keyword => 
+            searchText.includes(keyword.toLowerCase())
+          );
+        });
+      }
+    }
+
+    console.log(`🔍 Filtered courses: ${filtered.length} (Category: ${selectedCategory}, Topic: ${selectedTopic})`);
+    setFilteredCourses(filtered);
+  };
+
+  // Improved display title logic
   const getDisplayTitle = (course: Course): string => {
     const title = course.title;
     const category = course.category;
     
-    if (category === 'Programming Languages') {
-      if (title.includes('C') && !title.includes('C++') && !title.includes('C#')) return 'C Complete Course';
-      if (title.includes('C++')) return 'C++ Complete Course';
-      if (title.includes('Java')) return 'Java Complete Course';
-      if (title.includes('Python')) return 'Python Complete Course';
-      if (title.includes('JavaScript')) return 'JavaScript Complete Course';
-      if (title.includes('TypeScript')) return 'TypeScript Complete Course';
-    }
+    // Create a more generic and flexible title mapping
+    // const titleMap: { [key: string]: string } = {
+    //   'C': 'C Complete Course',
+    //   'C++': 'C++ Complete Course',
+    //   'Java': 'Java Complete Course',
+    //   'Python': 'Python Complete Course',
+    //   'JavaScript': 'JavaScript Complete Course',
+    //   'TypeScript': 'TypeScript Complete Course',
+    //   'HTML': 'HTML5 Complete Course',
+    //   'CSS': 'CSS3 Complete Course',
+    //   'Node.js': 'Node.js Complete Course',
+    //   'Express': 'Express.js Complete Course',
+    //   'Django': 'Django Complete Course',
+    //   'Flask': 'Flask Complete Course',
+    //   'React': 'React.js Complete Course',
+    //   'Angular': 'Angular Complete Course',
+    //   'Vue': 'Vue.js Complete Course',
+    // };
     
-    if (category === 'Web Development') {
-      if (title.includes('HTML')) return 'HTML5 Complete Course';
-      if (title.includes('CSS')) return 'CSS3 Complete Course';
-      if (title.includes('Node.js')) return 'Node.js Complete Course';
-      if (title.includes('Express')) return 'Express.js Complete Course';
-      if (title.includes('JavaScript')) return 'JavaScript Complete Course';
-      if (title.includes('TypeScript')) return 'TypeScript Complete Course';
-    }
+    // // Check if title contains any of the keys and return mapped value
+    // for (const [key, value] of Object.entries(titleMap)) {
+    //   if (title.includes(key)) {
+    //     return value;
+    //   }
+    // }
     
+    // For DSA courses
     if (category === 'Data Structures & Algorithms') {
       if (title.includes('C') && !title.includes('C++')) return 'DSA in C Complete Course';
       if (title.includes('C++')) return 'DSA in C++ Complete Course';
@@ -190,115 +181,27 @@ export default function CoursesPage() {
       if (title.includes('JavaScript')) return 'DSA in JavaScript Complete Course';
     }
     
+    // Return original title if no mapping found
     return title;
-  };
-
-  const filterCourses = () => {
-    let filtered = [...courses];
-  
-    // ✅ Filter by category
-    filtered = filtered.filter(
-      (course) =>
-        course.category &&
-        course.category.toLowerCase() === selectedCategory.toLowerCase()
-    );
-  
-    // ✅ Topic filter - FIXED FOR ALL BUTTONS
-    if (selectedTopic) {
-      const topic = selectedTopic.toLowerCase();
-      
-      filtered = filtered.filter((course) => {
-        const title = course.title.toLowerCase();
-        const subcategory = (course.subcategory || '').toLowerCase();
-        
-        // C button
-        if (topic === 'c') {
-          return (title.includes('c ') || title.includes('c programming') || title.includes('c language')) 
-                 && !title.includes('c++') && !subcategory.includes('cpp');
-        }
-        
-        // C++ button
-        if (topic === 'cpp') {
-          return title.includes('c++') || title.includes('cpp');
-        }
-        
-        // Java button - exclude JavaScript
-        if (topic === 'java') {
-          return (title.includes('java') && !title.includes('javascript')) || subcategory === 'java';
-        }
-        
-     
-// ✅ Python button - FIXED
-if (topic === 'python') {
-  return title.includes('python') || title.includes('python mastery') || title.includes('python programming');
-}
-
-        
- // ✅ JavaScript button - FIXED
- if (topic === 'javascript') {
-  return title.includes('javascript') || title.includes('js') || title.includes('javascript complete');
-}
-
-
-        // TypeScript button
-        if (topic === 'typescript') {
-          return title.includes('typescript') || title.includes('ts');
-        }
-        
-        return false;
-      });
-    }
-  
-    // ✅ Programming Languages sorting (only when no topic selected)
-    if (selectedCategory === 'Programming Languages' && !selectedTopic) {
-      const orderList = ['c', 'cpp', 'java', 'python', 'javascript', 'typescript'];
-      
-      filtered = filtered.filter((course) => {
-        const subcategory = (course.subcategory || '').toLowerCase();
-        const title = (course.title || '').toLowerCase();
-        return orderList.some(topic => 
-          subcategory.includes(topic) || title.includes(topic)
-        );
-      });
-      
-      filtered.sort((a, b) => {
-        const aVal = (a.subcategory || a.title || '').toLowerCase();
-        const bVal = (b.subcategory || b.title || '').toLowerCase();
-        
-        const aIndex = orderList.findIndex(o => aVal.includes(o));
-        const bIndex = orderList.findIndex(o => bVal.includes(o));
-        
-        return aIndex - bIndex;
-      });
-    }
-  
-    setFilteredCourses(filtered);
   };
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
-    setSelectedTopic('');
+    setSelectedTopic(''); // Reset topic when category changes
   };
 
   const handleTopicClick = (topic: string) => {
     setSelectedTopic(topic);
   };
 
+  const handleResetFilters = () => {
+    setSelectedCategory('All');
+    setSelectedTopic('');
+  };
+
   const getTopicsForCategory = () => {
-    switch (selectedCategory) {
-      case 'Programming Languages': return programmingTopics;
-      case 'Web Development': return webDevTopics;
-      case 'Data Structures & Algorithms': return dsaTopics;
-      case 'Mobile Development': return mobileDevTopics;
-      case 'Android Development': return androidDevTopics;
-      case 'Frontend Frameworks': return frontendTopics;
-      case 'Backend Languages': return backendLangTopics;
-      case 'Backend Frameworks': return backendFrameworkTopics;
-      case 'Data Science & AI': return dataScienceTopics;
-      case 'Databases': return databaseTopics;
-      case 'DevOps & Cloud': return devopsTopics;
-      default: return [];
-    }
+    if (selectedCategory === 'All') return [];
+    return topicDefinitions[selectedCategory as keyof typeof topicDefinitions] || [];
   };
 
   const topics = getTopicsForCategory();
@@ -331,28 +234,8 @@ if (topic === 'python') {
           </div>
         </div>
 
-        {/* Topics */}
-        {topics.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm p-4 mb-8">
-            <div className="flex flex-wrap gap-2 justify-center">
-              {topics.map((topic) => (
-                <button
-                  key={topic.slug}
-                  onClick={() => handleTopicClick(topic.slug)}
-                  className={`px-4 py-1.5 text-sm rounded-full transition-all duration-200 ${
-                    selectedTopic === topic.slug
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-blue-100 hover:text-blue-600'
-                  }`}
-                >
-                  {topic.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
-        {/* Course Grid with modified titles */}
+        {/* Course Grid */}
         {loading ? (
           <div className="text-center py-16">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
@@ -375,10 +258,7 @@ if (topic === 'python') {
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No courses found</h3>
             <p className="text-gray-500">Try selecting a different category or topic</p>
             <button
-              onClick={() => {
-                setSelectedCategory('Programming Languages');
-                setSelectedTopic('');
-              }}
+              onClick={handleResetFilters}
               className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
               Reset Filters
