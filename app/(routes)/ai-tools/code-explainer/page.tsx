@@ -1,22 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { FiCode } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
 export default function CodeExplainerPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
   const [code, setCode] = useState('');
   const [explanation, setExplanation] = useState('');
   const [loading, setLoading] = useState(false);
-
-  if (status === 'unauthenticated') {
-    router.push('/auth/login');
-    return null;
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +32,7 @@ export default function CodeExplainerPage() {
       
       if (response.ok) {
         setExplanation(data.explanation);
-        setCode(''); // Clear input
+        setCode('');
       } else {
         toast.error(data.error || 'Something went wrong');
       }

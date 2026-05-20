@@ -1,23 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { FiSend } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
 export default function DoubtSolverPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [loading, setLoading] = useState(false);
-
-  // Redirect if not logged in
-  if (status === 'unauthenticated') {
-    router.push('/auth/login');
-    return null;
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +32,7 @@ export default function DoubtSolverPage() {
       
       if (response.ok) {
         setAnswer(data.answer);
-        setQuestion(''); // Clear input after answer
+        setQuestion('');
       } else {
         toast.error(data.error || 'Something went wrong');
       }
