@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { FiHelpCircle } from 'react-icons/fi';
-import toast from 'react-hot-toast';
+import { useState } from "react";
+import { FiHelpCircle } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 export default function QuizGeneratorPage() {
-  const [input, setInput] = useState('');
-  const [quiz, setQuiz] = useState('');
+  const [input, setInput] = useState("");
+  const [quiz, setQuiz] = useState("");
   const [loading, setLoading] = useState(false);
 
   const extractTopicAndCount = (input: string) => {
@@ -25,34 +25,34 @@ export default function QuizGeneratorPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) {
-      toast.error('Please enter a topic');
+      toast.error("Please enter a topic");
       return;
     }
 
     const { topic, count } = extractTopicAndCount(input);
 
     setLoading(true);
-    setQuiz('');
+    setQuiz("");
 
     try {
-      const response = await fetch('/api/ai/quiz-generator', {
-        method: 'POST',
+      const response = await fetch("/api/ai/quiz-generator", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ topic, count }),
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
         setQuiz(data.quiz);
-        setInput('');
+        setInput("");
       } else {
-        toast.error(data.error || 'Something went wrong');
+        toast.error(data.error || "Something went wrong");
       }
     } catch (error) {
-      toast.error('Failed to generate quiz');
+      toast.error("Failed to generate quiz");
     } finally {
       setLoading(false);
     }
@@ -62,10 +62,10 @@ export default function QuizGeneratorPage() {
     <div className="min-h-screen pt-24 pb-16 px-4 bg-gray-50">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Quiz Generator</h1>
-          <p className="text-gray-600">
-            Generate practice questions (1-100). Example: "react 20" or "python 50"
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            AI Quiz Generator
+          </h1>
+          <p className="text-gray-600"></p>
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -74,10 +74,9 @@ export default function QuizGeneratorPage() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="e.g., 'html 20' or 'javascript 50'"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            
+
             <div className="flex justify-end mt-4">
               <button
                 type="submit"
@@ -102,7 +101,9 @@ export default function QuizGeneratorPage() {
 
         {quiz && (
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Quiz Questions</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Quiz Questions
+            </h2>
             <div className="prose max-w-none bg-gray-50 p-4 rounded-lg">
               <p className="text-gray-700 whitespace-pre-line">{quiz}</p>
             </div>
