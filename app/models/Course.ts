@@ -81,8 +81,8 @@ const CourseSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Calculate total lessons before saving
-CourseSchema.pre('save', function(next) {
+// ✅ FIX: Proper TypeScript syntax with this: any
+CourseSchema.pre('save', function(this: any, next: any) {
   if (this.lessons) {
     this.totalLessons = this.lessons.length;
   }
